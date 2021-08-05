@@ -2,7 +2,11 @@
     <div class="clo-xs-10">
         <app-shopping-edit></app-shopping-edit>
         <hr>
-        <p>Shopping list</p>
+        <ul class="list-group">
+            <a href="#" class="list-group-item" 
+            style="cursor: pointer;"
+            *ngFor="let item of ingredients">{{item.name}} ({{item.amount}})</a>
+        </ul>
 
     </div>
 </div>
