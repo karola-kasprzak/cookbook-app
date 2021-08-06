@@ -1,8 +1,12 @@
 <div class="row">
     <div class="clo-xs-10">
-        <app-shopping-edit></app-shopping-edit>
+        <app-shopping-edit (ingredients)="ingredientsList = $event"></app-shopping-edit>
         <hr>
-        <p>Shopping list</p>
+        <ul class="list-group">
+            <a href="#" class="list-group-item" 
+            style="cursor: pointer;"
+            *ngFor="let item of ingredientsList">{{item.name}} ({{item.amount}})</a>
+        </ul>
 
     </div>
 </div>
