@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Ingredient } from 'src/app/shared/ingredient.model';
+import { ShoppingService } from 'src/app/shared/shopping.service';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -7,37 +8,28 @@ import { Ingredient } from 'src/app/shared/ingredient.model';
   styleUrls: ['./shopping-edit.component.css']
 })
 export class ShoppingEditComponent implements OnInit {
-  @Output() ingredients = new EventEmitter<{}[]>();
 
-  constructor() { }
+  constructor(private shoppingService: ShoppingService) { }
   ingredientName: string;
   ingredientAmount: number;
-  ingredientList: Ingredient[] = [];
+  ingredientList: Ingredient[];
 
   ngOnInit(): void {
   }
 
-  updateIngredients() {
-    this.ingredients.emit(this.ingredientList);
-    console.log(this.ingredientList)
-  }
-
   onAddIngredient() {
     if (this.ingredientAmount && this.ingredientName) { 
-      this.ingredientList.push(new Ingredient(this.ingredientName, this.ingredientAmount))
+      const ingredient = new Ingredient(this.ingredientName, this.ingredientAmount);
+      this.shoppingService.addIngredient(ingredient)
      }
      this.ingredientName = null;
      this.ingredientAmount = null;
-     this.updateIngredients();
   }
 
   onClearIngredients() {
-    this.ingredientList = [];
-    this.updateIngredients()
+    this.shoppingService.clearIngredientList();
   }
 
   onDeleteLast() {
-    this.ingredientList = this.ingredientList.slice(0, this.ingredientList.length-1);
-    this.updateIngredients()
   }
 }
